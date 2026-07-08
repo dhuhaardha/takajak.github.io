@@ -19,19 +19,21 @@
     --coral: #FF6F59;        /* primary accent — flap, "Yes" button */
     --butter: #FFD166;       /* seal / stamp accent */
     --teal: #5BA8A0;         /* secondary accent — links, confirmation text */
-    --pink: #F5B8C4;         /* ambient gradient stop */
     --paper-shadow: rgba(46,42,61,0.18);
   }
   /* ========================================================= */
 
   *{ box-sizing:border-box; }
 
-  html{ background:var(--cream); }
-
   body{
     margin:0;
     min-height:100vh;
-    background:var(--cream);
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255,111,89,0.07), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(91,168,160,0.09), transparent 45%),
+      var(--cream);
+    background-size: 140% 140%;
+    animation: bgDrift 24s ease-in-out infinite alternate;
     font-family:'Work Sans', sans-serif;
     color:var(--ink);
     display:flex;
@@ -40,6 +42,10 @@
     overflow-x:hidden;
     padding:24px;
     position:relative;
+  }
+  @keyframes bgDrift{
+    0%{ background-position: 0% 0%; }
+    100%{ background-position: 12% 10%; }
   }
 
   /* subtle paper grain */
@@ -53,45 +59,18 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
   }
 
-  /* ---------- AMBIENT MOVING BACKGROUND ---------- */
-  .ambient{
-    position:fixed;
-    inset:-10%;
-    z-index:0;
-    pointer-events:none;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(255,111,89,0.10), transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(91,168,160,0.10), transparent 45%),
-      radial-gradient(circle at 50% 90%, rgba(245,184,196,0.12), transparent 40%);
-    animation: ambientDrift 22s ease-in-out infinite alternate;
-    filter: blur(2px);
-    transition: filter 0.8s ease;
-  }
-  body.letter-open .ambient{ filter: blur(6px); }
-  @keyframes ambientDrift{
-    0%{   background-position: 0% 0%, 0% 0%, 0% 0%; opacity:0.9; }
-    50%{  background-position: 10% 6%, -8% -6%, 4% -4%; opacity:1; }
-    100%{ background-position: -6% 4%, 6% 8%, -4% 6%; opacity:0.85; }
-  }
-
-  /* ---------- FLOATING AMBIENT DOODLES ---------- */
-  .doodles{
-    position:fixed;
-    inset:0;
-    z-index:0;
-    pointer-events:none;
-    opacity:0;
-    transition:opacity 1.2s ease 0.4s;
-  }
-  body.letter-open .doodles{ opacity:0.15; }
+  /* ---------- a few quiet floating doodles ---------- */
   .doodle{
-    position:absolute;
-    font-size:1.6rem;
-    animation: doodleFloat 9s ease-in-out infinite;
+    position:fixed;
+    font-size:1.4rem;
+    opacity:0.13;
+    z-index:0;
+    pointer-events:none;
+    animation: doodleFloat 8s ease-in-out infinite;
   }
   @keyframes doodleFloat{
     0%,100%{ transform:translateY(0) rotate(0deg); }
-    50%{ transform:translateY(-22px) rotate(8deg); }
+    50%{ transform:translateY(-16px) rotate(6deg); }
   }
 
   .stage{
@@ -131,17 +110,6 @@
     border-radius:10px;
     box-shadow: 0 18px 40px var(--paper-shadow), 0 2px 0 rgba(0,0,0,0.03) inset;
     overflow:hidden;
-    transition: transform 0.45s ease;
-  }
-  .envelope-wrap.shaking .envelope-body{
-    animation: envelopeShake 0.45s ease;
-  }
-  @keyframes envelopeShake{
-    0%,100%{ transform:translateX(0) rotate(0deg); }
-    20%{ transform:translateX(-3px) rotate(-0.6deg); }
-    40%{ transform:translateX(3px) rotate(0.6deg); }
-    60%{ transform:translateX(-2px) rotate(-0.4deg); }
-    80%{ transform:translateX(2px) rotate(0.4deg); }
   }
 
   .envelope-body::after{ /* side pocket lines */
@@ -193,12 +161,6 @@
   .envelope-wrap:not(.opened):hover .seal{
     transform:translate(-50%,-50%) scale(1.08) rotate(-4deg);
   }
-  .seal.pinged{ animation: sealPing 0.3s ease; }
-  @keyframes sealPing{
-    0%{ transform:translate(-50%,-50%) scale(1); }
-    40%{ transform:translate(-50%,-50%) scale(0.82) rotate(-8deg); }
-    100%{ transform:translate(-50%,-50%) scale(1); }
-  }
 
   .tap-label{
     position:absolute;
@@ -227,14 +189,14 @@
     padding:34px 28px 28px;
     box-shadow: 0 24px 50px var(--paper-shadow);
     opacity:0;
-    transform: translateY(50%) scale(0.85);
-    transition: transform 0.75s cubic-bezier(.34,1.4,.4,1) 0.1s, opacity 0.5s ease 0.1s;
+    transform: translateY(30%) scale(0.9);
+    transition: transform 0.7s cubic-bezier(.28,1.15,.35,1) 0.32s, opacity 0.5s ease 0.32s;
     z-index:3;
     pointer-events:none;
   }
   .envelope-wrap.opened .letter{
     opacity:1;
-    transform: translateY(-38%) scale(1);
+    transform: translateY(-37%) scale(1);
     pointer-events:auto;
   }
 
@@ -270,31 +232,31 @@
     color:var(--ink);
   }
 
-  /* ---------- STICKY NOTE ---------- */
+  /* ---------- sticky note — small, low-cost warmth ---------- */
   .sticky-note{
     position:absolute;
-    top:-18px;
+    top:-16px;
     left:18px;
-    width:135px;
+    width:128px;
     background:#FFF7A8;
-    padding:14px;
+    padding:12px;
     border-radius:4px;
-    transform:rotate(-6deg) scale(0.6);
+    transform:rotate(-6deg) scale(0.7);
     font-family:'Caveat',cursive;
-    font-size:1.15rem;
+    font-size:1.1rem;
     line-height:1.35;
     color:#4a4326;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    box-shadow:0 10px 22px rgba(0,0,0,.14);
     z-index:20;
     opacity:0;
-    transition: opacity 0.5s ease 1.15s, transform 0.6s cubic-bezier(.34,1.6,.4,1) 1.15s;
+    transition: opacity 0.5s ease 0.95s, transform 0.55s cubic-bezier(.34,1.5,.4,1) 0.95s;
   }
   .envelope-wrap.opened .sticky-note{
     opacity:1;
     transform:rotate(-6deg) scale(1);
   }
   .sticky-note .pin{
-    width:10px; height:10px;
+    width:9px; height:9px;
     background:var(--coral);
     border-radius:50%;
     position:absolute;
@@ -302,13 +264,7 @@
     transform:translateX(-50%);
     box-shadow:0 2px 4px rgba(0,0,0,0.25);
   }
-  .sticky-note .line{ display:block; margin-top:2px; }
-
-  .doodle-star{
-    position:absolute;
-    width:20px; height:20px;
-    opacity:0.5;
-  }
+  .sticky-note .line{ display:block; margin-top:1px; }
 
   /* ---------- DETAILS LIST ---------- */
   .details{
@@ -401,241 +357,39 @@
     min-height:1.6rem;
   }
 
-  /* ---------- SPOTIFY-STYLE FOOTER ---------- */
-  .now-playing{
-    margin-top:24px;
-    padding-top:18px;
-    border-top:1px dashed rgba(46,42,61,0.18);
-    opacity:0;
-    transform:translateY(8px);
-    transition: opacity 0.6s ease 1.5s, transform 0.6s ease 1.5s;
-  }
-  .envelope-wrap.opened .now-playing{
-    opacity:1;
-    transform:translateY(0);
-  }
-  .now-playing a{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    text-decoration:none;
-    color:inherit;
-  }
-  .np-art{
-    flex:none;
-    width:42px; height:42px;
-    border-radius:8px;
-    background:linear-gradient(135deg, var(--teal), #3f8a82);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:1.1rem;
-    box-shadow:0 4px 10px rgba(91,168,160,0.35);
-  }
-  .np-body{ flex:1; min-width:0; }
-  .np-label{
-    font-family:'Space Mono', monospace;
-    font-size:0.6rem;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    color:var(--teal);
-    margin:0 0 2px;
-  }
-  .np-title{
-    font-size:0.88rem;
-    font-weight:600;
-    color:var(--ink);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  .np-bar{
-    margin-top:6px;
-    height:3px;
-    border-radius:2px;
-    background:rgba(46,42,61,0.12);
-    overflow:hidden;
-  }
-  .np-bar-fill{
-    width:78%;
-    height:100%;
-    background:var(--teal);
-    border-radius:2px;
-  }
-  .np-play{
-    flex:none;
-    width:28px; height:28px;
-    border-radius:50%;
-    background:var(--ink);
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:0.7rem;
-  }
-
-  /* ---------- ACHIEVEMENT TOAST ---------- */
-  .achievement{
-    position:fixed;
-    left:50%;
-    bottom:-100px;
-    transform:translateX(-50%);
-    background:var(--ink);
-    color:#FBF3E7;
-    padding:14px 20px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    box-shadow:0 12px 30px rgba(0,0,0,0.3);
-    z-index:200;
-    transition: bottom 0.5s cubic-bezier(.34,1.4,.4,1);
-    font-family:'Work Sans', sans-serif;
-  }
-  .achievement.show{ bottom:24px; }
-  .achievement .ach-icon{ font-size:1.5rem; }
-  .achievement .ach-title{
-    font-family:'Space Mono', monospace;
-    font-size:0.62rem;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--butter);
-    margin:0 0 2px;
-  }
-  .achievement .ach-body{ font-size:0.85rem; font-weight:600; }
-
-  /* ---------- LOADER ---------- */
-  .loader{
-    position:fixed;
-    inset:0;
-    z-index:100;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(251,243,231,0.9);
-    backdrop-filter: blur(10px);
-    opacity:0;
-    pointer-events:none;
-    transition: opacity 0.35s ease;
-  }
-  .loader.show{ opacity:1; pointer-events:auto; }
-  .loader-card{
-    width:240px;
-    text-align:center;
-    font-family:'Space Mono', monospace;
-    color:var(--ink);
-  }
-  .loader-line{
-    font-size:0.82rem;
-    letter-spacing:0.03em;
-    min-height:1.4em;
-    margin-bottom:14px;
-  }
-  .loader-track{
-    width:100%;
-    height:6px;
-    border-radius:4px;
-    background:rgba(46,42,61,0.12);
-    overflow:hidden;
-  }
-  .loader-fill{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg, var(--coral), var(--butter));
-    border-radius:4px;
-    transition:width 1.6s cubic-bezier(.3,.6,.3,1);
-  }
-  .loader-done{
-    margin-top:14px;
-    font-family:'Caveat', cursive;
-    font-size:1.4rem;
-    color:var(--teal);
-    opacity:0;
-    transition:opacity 0.3s ease;
-  }
-  .loader-done.show{ opacity:1; }
-
-  /* ---------- CONFETTI ---------- */
+  /* ---------- tiny confetti burst on open ---------- */
   .confetti-piece{
     position:fixed;
     top:-5%;
-    font-size:1.1rem;
-    z-index:150;
+    font-size:1rem;
+    z-index:50;
     pointer-events:none;
     animation: confettiFall linear forwards;
   }
   @keyframes confettiFall{
     0%{ transform:translateY(0) rotate(0deg); opacity:1; }
-    100%{ transform:translateY(110vh) rotate(300deg); opacity:0; }
-  }
-
-  /* ---------- CUSTOM CURSOR (desktop only) ---------- */
-  .cursor-dot{
-    position:fixed;
-    top:0; left:0;
-    width:26px; height:26px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:1.15rem;
-    pointer-events:none;
-    z-index:300;
-    transform:translate(-50%,-50%);
-    transition: font-size 0.15s ease;
-    will-change:transform;
-  }
-  .trail-bit{
-    position:fixed;
-    top:0; left:0;
-    font-size:0.8rem;
-    pointer-events:none;
-    z-index:290;
-    opacity:0.8;
-    animation: trailFade 0.9s ease forwards;
-  }
-  @keyframes trailFade{
-    0%{ opacity:0.8; transform:translate(-50%,-50%) scale(1); }
-    100%{ opacity:0; transform:translate(-50%,-50%) scale(0.4) translateY(-16px); }
-  }
-  @media (hover:hover) and (pointer:fine){
-    body.custom-cursor, body.custom-cursor a, body.custom-cursor button, body.custom-cursor .envelope-wrap{
-      cursor:none;
-    }
-  }
-
-  /* ---------- MOBILE RIPPLE ---------- */
-  .ripple{
-    position:fixed;
-    width:16px; height:16px;
-    border-radius:50%;
-    background:rgba(255,209,102,0.55);
-    pointer-events:none;
-    z-index:150;
-    transform:translate(-50%,-50%) scale(0.3);
-    animation: rippleGrow 0.6s ease forwards;
-  }
-  @keyframes rippleGrow{
-    0%{ transform:translate(-50%,-50%) scale(0.3); opacity:0.9; }
-    100%{ transform:translate(-50%,-50%) scale(3.2); opacity:0; }
+    100%{ transform:translateY(105vh) rotate(260deg); opacity:0; }
   }
 
   @media (max-width: 420px){
     .letter h1{ font-size:2.1rem; }
     .letter{ padding:26px 20px 22px; }
-    .sticky-note{ width:118px; font-size:1rem; }
+    .sticky-note{ width:112px; font-size:0.98rem; }
   }
 
   @media (prefers-reduced-motion: reduce){
-    .flap, .seal, .letter, .tap-label, .envelope-body, .sticky-note, .now-playing{ transition:none !important; }
-    .ambient, .doodle{ animation:none !important; }
-    .confetti-piece, .trail-bit, .ripple{ display:none !important; }
+    .flap, .seal, .letter, .tap-label, .sticky-note{ transition:none !important; }
+    body, .doodle{ animation:none !important; }
+    .confetti-piece{ display:none !important; }
   }
 </style>
 </head>
 <body>
 
-<div class="ambient"></div>
-<div class="doodles" id="doodles"></div>
+<!-- a few quiet doodles, positioned once, no JS needed for these -->
+<div class="doodle" style="top:12%; left:8%; animation-delay:0s;">☕</div>
+<div class="doodle" style="top:70%; left:85%; animation-delay:2.5s;">🌼</div>
+<div class="doodle" style="top:82%; left:12%; animation-delay:4.2s;">✨</div>
 
 <div class="stage">
   <div class="hint" id="hint">psst — this one's for you
@@ -645,15 +399,22 @@
   <div class="envelope-wrap" id="envelope" role="button" tabindex="0" aria-label="Open the invitation">
     <div class="envelope-body"></div>
     <div class="flap"></div>
-    <div class="seal" id="seal">
+    <div class="seal">
       <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L14.4 8.6L21.5 9.2L16 13.6L17.8 20.6L12 16.7L6.2 20.6L8 13.6L2.5 9.2L9.6 8.6L12 2Z" fill="#2E2A3D"/></svg>
     </div>
     <div class="tap-label">tap to open</div>
 
     <div class="letter" id="letter">
+      <!-- <div class="sticky-note">
+        <div class="pin"></div>
+        <span class="line">remember...</span>
+        <span class="line">✨ don't overthink</span>
+        <span class="line">☕ just enjoy today</span>
+      </div> -->
 
       <p class="postmark" id="postmark">Delivered today · Semarang</p>
 
+      <!-- EDIT: headline & opening line -->
       <h1>Ngobrol Santai<br>yuukk?</h1>
       <p>No agenda, no meeting notes — cuma pengin ketemu ngorbol diluar kerjaan sama bahas terkait diri kita masing-masing, just thought it'd be nice to hang out after work sometime, away from our desks for once.</p>
 
@@ -702,24 +463,6 @@
   </div>
 </div>
 
-<!-- loading overlay -->
-<div class="loader" id="loader">
-  <div class="loader-card">
-    <p class="loader-line" id="loaderLine">Decrypting invitation...</p>
-    <div class="loader-track"><div class="loader-fill" id="loaderFill"></div></div>
-    <p class="loader-done" id="loaderDone">Invitation unlocked 💌</p>
-  </div>
-</div>
-
-<!-- achievement toast -->
-<div class="achievement" id="achievement">
-  <div class="ach-icon">🏆</div>
-  <div>
-    <p class="ach-title">Achievement unlocked</p>
-    <p class="ach-body">Persistent Person — +100 curiosity</p>
-  </div>
-</div>
-
 <script>
   /* =========================================================
      EDIT ZONE — CONFIG
@@ -728,40 +471,57 @@
     whatsappNumber: "628994184679", // <-- EDIT THIS
     whatsappMessageYes: "Ayoookk :)",
     whatsappMessageMaybe: "Bentar coba tak cek agendaku dulu yaa :(",
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Grile+Ungaran+Jl+MT+Hariyono+No.45+Ungaran",
-    spotifyUrl: "https://open.spotify.com/search/lofi%20coffee%20chill%20playlist",
-    soundEnabled: true
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Grile+Ungaran+Jl+MT+Hariyono+No.45+Ungaran"
   };
   /* ========================================================= */
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
   const envelope   = document.getElementById('envelope');
-  const seal       = document.getElementById('seal');
   const hint       = document.getElementById('hint');
   const postmark   = document.getElementById('postmark');
   const responseEl = document.getElementById('response');
   const btnYes     = document.getElementById('btnYes');
   const btnMaybe   = document.getElementById('btnMaybe');
   const mapLink    = document.getElementById('mapLink');
-  const spotifyLink= document.getElementById('spotifyLink');
-  const loader     = document.getElementById('loader');
-  const loaderLine = document.getElementById('loaderLine');
-  const loaderFill = document.getElementById('loaderFill');
-  const loaderDone = document.getElementById('loaderDone');
-  const achievement= document.getElementById('achievement');
-  const doodlesWrap = document.getElementById('doodles');
 
-  // date on postmark
   const today = new Date();
   postmark.textContent = `Delivered ${today.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })} · Semarang`;
 
-  // wire up links
   mapLink.href = CONFIG.mapsUrl;
-  spotifyLink.href = CONFIG.spotifyUrl;
   btnYes.href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(CONFIG.whatsappMessageYes)}`;
   btnMaybe.href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(CONFIG.whatsappMessageMaybe)}`;
+
+  // small confetti burst — cheap, self-cleaning, no libraries
+  const confettiEmojis = ['✨','🌸','☕'];
+  function burstConfetti(count = 10){
+    if(prefersReducedMotion) return;
+    for(let i=0;i<count;i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.textContent = confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)];
+      piece.style.left = (10 + Math.random()*80) + 'vw';
+      const duration = 2 + Math.random()*1.3;
+      piece.style.animationDuration = duration + 's';
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), duration*1000 + 100);
+    }
+  }
+
+  function openEnvelope(){
+    if(envelope.classList.contains('opened')) return;
+    envelope.classList.add('opened');
+    hint.style.opacity = '0';
+    burstConfetti();
+    if('vibrate' in navigator){
+      try{ navigator.vibrate(20); }catch(err){}
+    }
+  }
+
+  envelope.addEventListener('click', openEnvelope);
+  envelope.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openEnvelope(); }
+  });
 
   btnYes.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -771,206 +531,6 @@
     e.stopPropagation();
     responseEl.textContent = "All good — opening WhatsApp so you can reply.";
   });
-
-  // ---------- floating ambient doodles ----------
-  const doodleEmojis = ['☕','🌼','✨','💛'];
-  doodleEmojis.forEach((emoji, i) => {
-    const el = document.createElement('div');
-    el.className = 'doodle';
-    el.textContent = emoji;
-    el.style.left = (10 + i * 22 + Math.random()*8) + '%';
-    el.style.top = (15 + (i % 2) * 55 + Math.random()*10) + '%';
-    el.style.animationDelay = (i * 1.3) + 's';
-    el.style.animationDuration = (7 + i) + 's';
-    doodlesWrap.appendChild(el);
-  });
-
-  // ---------- tiny synthesized sound (optional, respects device silent state naturally) ----------
-  let audioCtx = null;
-  function playSound(kind){
-    if(!CONFIG.soundEnabled) return;
-    try{
-      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-      const now = audioCtx.currentTime;
-      if(kind === 'click'){
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(680, now);
-        osc.frequency.exponentialRampToValueAtTime(420, now + 0.08);
-        gain.gain.setValueAtTime(0.05, now);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
-        osc.connect(gain).connect(audioCtx.destination);
-        osc.start(now); osc.stop(now + 0.13);
-      } else if(kind === 'whoosh'){
-        const bufferSize = audioCtx.sampleRate * 0.3;
-        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for(let i=0;i<bufferSize;i++){ data[i] = (Math.random()*2-1) * (1 - i/bufferSize); }
-        const noise = audioCtx.createBufferSource();
-        noise.buffer = buffer;
-        const filter = audioCtx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.value = 1200;
-        const gain = audioCtx.createGain();
-        gain.gain.setValueAtTime(0.06, now);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
-        noise.connect(filter).connect(gain).connect(audioCtx.destination);
-        noise.start(now);
-      }
-    }catch(err){ /* audio not available, silently skip */ }
-  }
-
-  // ---------- confetti ----------
-  const confettiEmojis = ['✨','🌸','💛','☕'];
-  function burstConfetti(count = 15){
-    if(prefersReducedMotion) return;
-    for(let i=0;i<count;i++){
-      const piece = document.createElement('div');
-      piece.className = 'confetti-piece';
-      piece.textContent = confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)];
-      piece.style.left = (10 + Math.random()*80) + 'vw';
-      const duration = 2.4 + Math.random()*1.6;
-      piece.style.animationDuration = duration + 's';
-      piece.style.fontSize = (0.9 + Math.random()*0.7) + 'rem';
-      document.body.appendChild(piece);
-      setTimeout(() => piece.remove(), duration*1000 + 100);
-    }
-  }
-
-  // ---------- achievement toast ----------
-  let sealClicks = 0;
-  let sealTimer = null;
-  function bumpSeal(){
-    sealClicks++;
-    seal.classList.remove('pinged');
-    void seal.offsetWidth;
-    seal.classList.add('pinged');
-    clearTimeout(sealTimer);
-    sealTimer = setTimeout(() => { sealClicks = 0; }, 2500);
-    if(sealClicks >= 5){
-      sealClicks = 0;
-      achievement.classList.add('show');
-      setTimeout(() => achievement.classList.remove('show'), 3200);
-      startOpenSequence();
-    }
-  }
-  seal.addEventListener('click', (e) => {
-    if(envelope.classList.contains('opened')) return;
-    e.stopPropagation();
-    bumpSeal();
-  });
-
-  // ---------- loader sequence ----------
-  function runLoader(onComplete){
-    const lines = ["Decrypting invitation...", "Loading confidence...", "Almost there..."];
-    loader.classList.add('show');
-    loaderFill.style.width = '0%';
-    loaderDone.classList.remove('show');
-    loaderLine.textContent = lines[0];
-    playSound('click');
-
-    requestAnimationFrame(() => { loaderFill.style.width = '100%'; });
-
-    let step = 0;
-    const lineTimer = setInterval(() => {
-      step++;
-      if(step < lines.length){ loaderLine.textContent = lines[step]; }
-    }, 550);
-
-    setTimeout(() => {
-      clearInterval(lineTimer);
-      loaderLine.textContent = '';
-      loaderDone.classList.add('show');
-    }, 1500);
-
-    setTimeout(() => {
-      loader.classList.remove('show');
-      onComplete();
-    }, 1800);
-  }
-
-  // ---------- full open choreography ----------
-  let hasOpened = false;
-  function startOpenSequence(){
-    if(hasOpened) return;
-    hasOpened = true;
-    hint.style.opacity = '0';
-
-    runLoader(() => {
-      envelope.classList.add('shaking');
-      playSound('whoosh');
-      setTimeout(() => {
-        envelope.classList.remove('shaking');
-        envelope.classList.add('opened');
-        document.body.classList.add('letter-open');
-        burstConfetti(15);
-        if(isTouch && navigator.vibrate){
-          try{ navigator.vibrate(25); }catch(err){}
-        }
-      }, 380);
-    });
-  }
-
-  envelope.addEventListener('click', (e) => {
-    if(e.target === seal || seal.contains(e.target)) return;
-    startOpenSequence();
-  });
-  envelope.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); startOpenSequence(); }
-  });
-
-  // ---------- mobile tap ripple ----------
-  if(isTouch){
-    envelope.addEventListener('touchstart', (e) => {
-      if(hasOpened) return;
-      const touch = e.touches[0];
-      const ripple = document.createElement('div');
-      ripple.className = 'ripple';
-      ripple.textContent = '💛';
-      ripple.style.left = touch.clientX + 'px';
-      ripple.style.top = touch.clientY + 'px';
-      ripple.style.display = 'flex';
-      ripple.style.alignItems = 'center';
-      ripple.style.justifyContent = 'center';
-      ripple.style.background = 'transparent';
-      document.body.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 650);
-    }, { passive:true });
-  }
-
-  // ---------- desktop custom cursor + trail ----------
-  if(!isTouch && !prefersReducedMotion){
-    document.body.classList.add('custom-cursor');
-    const cursorDot = document.createElement('div');
-    cursorDot.className = 'cursor-dot';
-    cursorDot.textContent = '✨';
-    document.body.appendChild(cursorDot);
-
-    let lastTrail = 0;
-    document.addEventListener('mousemove', (e) => {
-      cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
-
-      const now = performance.now();
-      if(now - lastTrail > 140){
-        lastTrail = now;
-        const bit = document.createElement('div');
-        bit.className = 'trail-bit';
-        bit.textContent = Math.random() > 0.5 ? '✨' : '🌸';
-        bit.style.left = e.clientX + 'px';
-        bit.style.top = e.clientY + 'px';
-        document.body.appendChild(bit);
-        setTimeout(() => bit.remove(), 950);
-      }
-    });
-
-    envelope.addEventListener('mouseenter', () => { cursorDot.textContent = '👉'; });
-    envelope.addEventListener('mouseleave', () => { cursorDot.textContent = '✨'; });
-    [btnYes, btnMaybe, mapLink, spotifyLink].forEach(el => {
-      el.addEventListener('mouseenter', () => { cursorDot.textContent = '🫶'; });
-      el.addEventListener('mouseleave', () => { cursorDot.textContent = '✨'; });
-    });
-  }
 </script>
 
 </body>
