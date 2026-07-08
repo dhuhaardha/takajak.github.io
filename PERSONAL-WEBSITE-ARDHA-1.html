@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhuha Ardha Saputra — Portofolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F1E7;
+    --paper-2:#EFE9DB;
+    --ink:#1C1B17;
+    --ink-soft:#4A473F;
+    --stone:#8B8377;
+    --moss:#3E4A3B;
+    --clay:#9C5B3C;
+    --line: rgba(28,27,23,0.13);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Inter', sans-serif; line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--moss); color:var(--paper); }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; cursor:pointer; background:none; border:none; }
+
+  h1,h2,h3,.serif{ font-family:'Fraunces', serif; }
+  .eyebrow{
+    font-size:0.7rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--stone);
+  }
+
+  .wrap{ max-width:1240px; margin:0 auto; padding:0 40px; }
+  @media(max-width:720px){ .wrap{ padding:0 22px; } }
+  section{ position:relative; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  @media(prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+
+  /* ---------------- NAV ---------------- */
+  header.site{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:30px 0; transition:background .4s ease, padding .4s ease, border-color .4s ease, color .4s ease;
+    border-bottom:1px solid transparent;
+    color:#EFE9DA;
+  }
+  header.site.scrolled{
+    background:rgba(245,241,231,0.92); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line); padding:16px 0;
+    color:var(--ink);
+  }
+  nav{ display:flex; justify-content:space-between; align-items:center; }
+  .brand{ font-size:1.2rem; font-style:italic; font-weight:400; letter-spacing:0.01em; order:2; }
+  .navlinks{ display:none; gap:30px; order:1; }
+  @media(min-width:860px){ .navlinks{ display:flex; } }
+  .navlinks a{ font-size:0.95rem; font-style:italic; font-family:'Fraunces', serif; letter-spacing:0; text-transform:none; color:inherit; position:relative; padding-bottom:3px; opacity:0.92; }
+  .navlinks a:hover{ opacity:1; }
+  .navlinks a::after{ content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:currentColor; transition:width .3s ease; }
+  .navlinks a:hover::after{ width:100%; }
+  .navtoggle{ border:1px solid currentColor; color:inherit; opacity:0.85; padding:8px 14px; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; }
+  @media(min-width:860px){ .navtoggle{ display:none; } }
+  .navsheet{ display:none; flex-direction:column; margin-top:14px; border-top:1px solid rgba(255,255,255,0.25); }
+  .navsheet.open{ display:flex; }
+  .navsheet a{ padding:16px 4px; border-bottom:1px solid rgba(255,255,255,0.15); font-size:0.95rem; font-style:italic; font-family:'Fraunces', serif; color:inherit; }
+  header.site.scrolled .navsheet{ border-top-color:var(--line); }
+  header.site.scrolled .navsheet a{ border-bottom-color:var(--line); }
+
+  /* ---------------- HERO ---------------- */
+  .hero{
+    min-height:100vh; display:flex; align-items:flex-end;
+    position:relative; padding:150px 0 64px; overflow:hidden;
+    background:#16283F; color:#EFE9DA;
+  }
+  .hero-art{
+    position:absolute; inset:0; z-index:0; overflow:hidden;
+  }
+  .hero-art svg{ width:100%; height:100%; display:block; transition:filter 1.1s ease; }
+  .hero.mode-kode .hero-art svg{ filter:hue-rotate(58deg) saturate(0.85); }
+  .hero-veil{
+    position:absolute; inset:0; z-index:1;
+    background:linear-gradient(to top, rgba(15,24,38,0.72) 0%, rgba(15,24,38,0.18) 42%, rgba(15,24,38,0.05) 65%);
+    pointer-events:none;
+  }
+  .hero .wrap{ position:relative; z-index:2; }
+  .hero-role{
+    font-size:0.8rem; letter-spacing:0.16em; text-transform:uppercase; color:#E7B77B;
+    height:1.4em; overflow:hidden; position:relative; margin-bottom:20px;
+  }
+  .hero-role span{ display:block; transition:transform .5s ease; }
+  .hero h1{
+    font-size:clamp(2.6rem, 8.5vw, 6.4rem); font-weight:400; line-height:0.98; letter-spacing:-0.01em;
+  }
+  .hero h1 em{ font-style:italic; font-weight:300; color:#B7C9A8; }
+  .hero-sub{
+    margin-top:26px; max-width:520px; font-size:1.05rem; color:rgba(239,233,218,0.82);
+  }
+  .hero-meta{
+    margin-top:40px; display:flex; gap:40px; flex-wrap:wrap;
+  }
+  .hero-meta div{ font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(239,233,218,0.55); }
+  .hero-meta strong{ display:block; font-family:'Fraunces', serif; font-style:italic; font-size:1rem; color:#EFE9DA; letter-spacing:0; text-transform:none; margin-top:4px; }
+
+  /* mode toggle pill */
+  .mode-toggle{
+    position:absolute; bottom:36px; left:50%; transform:translateX(-50%); z-index:3;
+    display:flex; align-items:center; gap:12px;
+  }
+  .mode-toggle span{ font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(239,233,218,0.6); transition:color .3s ease; }
+  .mode-toggle span.active{ color:#EFE9DA; }
+  .toggle-pill{
+    width:52px; height:28px; border:1px solid rgba(239,233,218,0.5); border-radius:20px; position:relative;
+    background:rgba(239,233,218,0.08);
+  }
+  .toggle-pill .knob{
+    position:absolute; top:2px; left:2px; width:22px; height:22px; border-radius:50%; background:#EFE9DA;
+    transition:left .3s ease;
+  }
+  .hero.mode-kode .toggle-pill .knob{ left:26px; }
+  @media(max-width:640px){ .mode-toggle{ display:none; } }
+
+  /* ---------------- TILE GRID (WORK CATEGORIES) ---------------- */
+  .tiles{ padding:110px 0; }
+  .tile-grid{ display:grid; grid-template-columns:1fr; gap:2px; background:var(--line); border:1px solid var(--line); }
+  @media(min-width:760px){ .tile-grid{ grid-template-columns:repeat(4,1fr); } }
+  .tile{
+    background:var(--paper); padding:40px 28px; min-height:290px; display:flex; flex-direction:column; justify-content:space-between;
+    position:relative; overflow:hidden; transition:background .35s ease;
+  }
+  .tile:hover{ background:var(--paper-2); }
+  .tile .num{ font-family:'Fraunces', serif; font-style:italic; font-size:0.95rem; color:var(--clay); }
+  .tile h3{ font-size:1.5rem; font-weight:400; margin-top:auto; padding-top:30px; }
+  .tile p{ font-size:0.82rem; color:var(--stone); margin-top:10px; }
+  .tile .go{ margin-top:18px; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-soft); display:inline-flex; align-items:center; gap:6px; }
+  .tile .go .arrow{ display:inline-block; transition:transform .3s ease; }
+  .tile:hover .go .arrow{ transform:translateX(5px); }
+
+  /* ---------------- MANIFESTO ---------------- */
+  .manifesto{ padding:60px 0 130px; text-align:center; }
+  .manifesto .wrap{ max-width:920px; }
+  .manifesto h2{
+    font-size:clamp(1.5rem, 4vw, 2.5rem); font-weight:400; font-style:italic; line-height:1.5; color:var(--ink-soft);
+  }
+  .manifesto h2 b{ font-weight:500; font-style:normal; color:var(--ink); }
+
+  /* ---------------- ABOUT / STATEMENT SPLIT ---------------- */
+  .about{ padding:0 0 130px; }
+  .about-grid{ display:grid; grid-template-columns:1fr; gap:50px; align-items:start; }
+  @media(min-width:900px){ .about-grid{ grid-template-columns:0.85fr 1.15fr; } }
+  .about-visual{
+    aspect-ratio:4/5; background:
+      radial-gradient(circle at 30% 30%, rgba(156,91,60,0.35), transparent 55%),
+      radial-gradient(circle at 70% 70%, rgba(62,74,59,0.35), transparent 55%),
+      var(--paper-2);
+    border:1px solid var(--line);
+  }
+  .about-copy h2{ font-size:clamp(1.8rem,4vw,2.6rem); font-weight:400; margin-bottom:26px; }
+  .about-copy p{ color:var(--ink-soft); margin-bottom:16px; max-width:560px; }
+  .about-cols{ display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:34px; }
+  @media(max-width:520px){ .about-cols{ grid-template-columns:1fr; } }
+  .about-cols .col-label{ font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--clay); margin-bottom:10px; }
+  .about-cols ul{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .about-cols li{ font-size:0.88rem; color:var(--ink-soft); padding-left:14px; position:relative; }
+  .about-cols li::before{ content:''; position:absolute; left:0; top:0.6em; width:5px; height:1px; background:var(--stone); }
+
+  /* ---------------- SECTION HEAD (reused) ---------------- */
+  .section-head{ margin-bottom:56px; max-width:640px; }
+  .section-head .eyebrow{ margin-bottom:14px; display:block; }
+  .section-head h2{ font-size:clamp(1.8rem,4vw,2.6rem); font-weight:400; }
+  .section-head p{ color:var(--ink-soft); margin-top:16px; }
+
+  /* ---------------- GALLERY ---------------- */
+  .gallery{ padding:110px 0; }
+  .gallery-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:34px; }
+  .art-frame{ position:relative; }
+  .art-canvas{
+    aspect-ratio:4/5; position:relative; overflow:hidden; background:var(--paper-2); border:1px solid var(--line);
+  }
+  .art-canvas img{ width:100%; height:100%; object-fit:cover; transition:transform .6s ease; }
+  .art-frame:hover .art-canvas img{ transform:scale(1.05); }
+  .art-blank{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px; color:var(--stone); font-size:0.78rem; }
+  .art-caption{ display:flex; justify-content:space-between; align-items:flex-end; gap:10px; margin-top:16px; }
+  .art-caption .meta .title{ font-family:'Fraunces', serif; font-style:italic; font-size:1.05rem; }
+  .art-caption .meta .loc{ color:var(--stone); font-size:0.78rem; margin-top:4px; display:block; }
+  .edit-pin{ font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--stone); border-bottom:1px solid var(--line); padding-bottom:2px; white-space:nowrap; }
+  .edit-pin:hover{ color:var(--clay); border-color:var(--clay); }
+
+  .swatch-1{ background: radial-gradient(circle at 30% 30%, rgba(156,91,60,0.30), transparent 55%), radial-gradient(circle at 70% 60%, rgba(62,74,59,0.24), transparent 55%), var(--paper-2); }
+  .swatch-2{ background: radial-gradient(circle at 65% 25%, rgba(139,131,119,0.30), transparent 60%), radial-gradient(circle at 25% 75%, rgba(156,91,60,0.20), transparent 55%), var(--paper-2); }
+  .swatch-3{ background: radial-gradient(circle at 40% 70%, rgba(62,74,59,0.30), transparent 55%), radial-gradient(circle at 75% 30%, rgba(28,27,23,0.10), transparent 55%), var(--paper-2); }
+  .swatch-4{ background: radial-gradient(circle at 50% 40%, rgba(156,91,60,0.24), transparent 60%), var(--paper-2); }
+
+  /* ---------------- WATCHLIST ---------------- */
+  .watch{ padding:110px 0; }
+  .watch-grid{ display:grid; grid-template-columns:1fr; gap:50px; }
+  @media(min-width:900px){ .watch-grid{ grid-template-columns:1.1fr 1fr 1fr; } }
+  .watch-col .col-label{ font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--clay); margin-bottom:6px; display:block; }
+  .watch-col h3{ font-size:1.3rem; font-weight:400; font-style:italic; margin-bottom:22px; }
+  .rec{ padding:16px 0; border-bottom:1px solid var(--line); }
+  .rec:last-child{ border-bottom:none; }
+  .rec .title{ font-family:'Fraunces', serif; font-size:1.05rem; }
+  .rec .note{ color:var(--ink-soft); font-size:0.85rem; margin-top:5px; }
+
+  /* ---------------- EXPERIENCE ---------------- */
+  .experience{ padding:110px 0; }
+  .exp-toolbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; gap:16px; flex-wrap:wrap; }
+  .btn{
+    font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    border:1px solid var(--ink); color:var(--ink); padding:11px 20px;
+    transition:background .2s ease, color .2s ease;
+  }
+  .btn:hover{ background:var(--ink); color:var(--paper); }
+  .btn.ghost{ border-color:var(--line); color:var(--stone); }
+  .btn.ghost:hover{ background:var(--line); color:var(--ink); }
+  .btn.danger{ border-color:var(--clay); color:var(--clay); }
+  .btn.danger:hover{ background:var(--clay); color:var(--paper); }
+
+  .timeline{ border-top:1px solid var(--line); }
+  .plaque-card{ position:relative; padding:34px 0; border-bottom:1px solid var(--line); display:grid; grid-template-columns:110px 1fr; gap:28px; }
+  @media(max-width:640px){ .plaque-card{ grid-template-columns:1fr; gap:10px; } }
+  .plaque-card .period{ font-size:0.75rem; color:var(--stone); letter-spacing:0.04em; }
+  .plaque-card h3{ font-size:1.35rem; font-weight:400; }
+  .plaque-card .role{ color:var(--ink-soft); font-size:0.9rem; margin-top:2px; font-style:italic; font-family:'Fraunces',serif; }
+  .plaque-card .desc{ margin-top:12px; color:var(--ink-soft); font-size:0.92rem; max-width:640px; }
+  .plaque-card .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .chip{ font-size:0.7rem; padding:5px 11px; border:1px solid var(--line); color:var(--ink-soft); }
+  .row-actions{ position:absolute; top:34px; right:0; display:flex; gap:8px; }
+  .row-actions button{ font-size:0.64rem; padding:6px 10px; }
+  .empty-note{ color:var(--stone); font-size:0.9rem; padding:30px 0; }
+
+  /* ---------------- DIALOG ---------------- */
+  dialog{ border:1px solid var(--ink); background:var(--paper); color:var(--ink); width:min(520px,92vw); padding:0; }
+  dialog::backdrop{ background:rgba(28,27,23,0.45); }
+  .dlg-inner{ padding:34px; }
+  .dlg-inner h3{ font-size:1.4rem; font-style:italic; font-weight:400; margin-bottom:22px; }
+  .field{ margin-bottom:15px; display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--stone); }
+  .field input, .field textarea{ background:var(--paper-2); border:1px solid var(--line); color:var(--ink); padding:11px 13px; font-family:'Inter',sans-serif; font-size:0.9rem; }
+  .field textarea{ min-height:74px; resize:vertical; }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--clay); }
+  .dlg-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:24px; }
+
+  /* ---------------- FOOTER ---------------- */
+  footer{ padding:90px 0 60px; border-top:1px solid var(--line); }
+  .foot-top{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:40px; margin-bottom:60px; }
+  .foot-brand h2{ font-size:clamp(1.8rem,5vw,3rem); font-weight:400; font-style:italic; max-width:520px; }
+  .foot-links{ display:flex; flex-direction:column; gap:12px; }
+  .foot-links a{ font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); }
+  .foot-links a:hover{ color:var(--clay); }
+  .foot-bottom{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; border-top:1px solid var(--line); padding-top:26px; }
+  .foot-bottom span{ font-size:0.72rem; color:var(--stone); }
+
+  /* ---------------- CUSTOM CURSOR ---------------- */
+  body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{ cursor:none; }
+  .cursor-dot, .cursor-ring{
+    position:fixed; top:0; left:0; pointer-events:none; z-index:9999;
+    border-radius:50%; transform:translate(-50%,-50%);
+    will-change:transform;
+  }
+  .cursor-dot{ width:6px; height:6px; background:var(--ink); transition:background .3s ease, width .25s ease, height .25s ease; }
+  .cursor-ring{
+    width:34px; height:34px; border:1px solid var(--ink); opacity:0.5;
+    transition:width .3s ease, height .3s ease, border-color .3s ease, opacity .3s ease;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .cursor-ring span{
+    font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0; transition:opacity .25s ease;
+    font-family:'Inter', sans-serif; color:var(--ink); white-space:nowrap;
+  }
+  body.on-dark .cursor-dot{ background:#EFE9DA; }
+  body.on-dark .cursor-ring{ border-color:#EFE9DA; }
+  body.on-dark .cursor-ring span{ color:#EFE9DA; }
+  .cursor-ring.expand{ width:64px; height:64px; opacity:0.9; }
+  .cursor-ring.expand .cursor-dot{ opacity:0; }
+  .cursor-ring.expand span{ opacity:1; }
+  @media(hover:none), (pointer:coarse){
+    .cursor-dot, .cursor-ring{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-ring" id="cursorRing"><span id="cursorLabel"></span></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<header class="site" id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <div class="brand">Dhuha Ardha Saputra</div>
+      <div class="navlinks">
+        <a href="#tentang">Tentang</a>
+        <a href="#galeri">Galeri</a>
+        <a href="#tontonan">Tontonan</a>
+        <a href="#pengalaman">Pengalaman</a>
+        <a href="#kontak">Kontak</a>
+      </div>
+      <button class="navtoggle" id="navToggle">Menu</button>
+    </nav>
+    <div class="navsheet" id="navSheet">
+      <a href="#tentang">Tentang</a>
+      <a href="#galeri">Galeri</a>
+      <a href="#tontonan">Tontonan</a>
+      <a href="#pengalaman">Pengalaman</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="beranda">
+  <div class="hero-art">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="grain">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" result="noise"/>
+          <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0"/>
+        </filter>
+        <radialGradient id="bg" cx="30%" cy="20%" r="90%">
+          <stop offset="0%" stop-color="#1c3350"/>
+          <stop offset="100%" stop-color="#0f1c30"/>
+        </radialGradient>
+        <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#F3D9A4"/>
+          <stop offset="100%" stop-color="#D99B4E"/>
+        </linearGradient>
+      </defs>
+
+      <rect width="1600" height="900" fill="url(#bg)"/>
+      <rect width="1600" height="900" filter="url(#grain)" opacity="0.5"/>
+
+      <!-- soft profile silhouette, left -->
+      <path d="M -40,120 C 120,40 260,90 300,230 C 340,360 260,420 300,520 C 330,600 420,610 380,700 C 340,790 200,820 40,760 L -40,760 Z"
+            fill="#3f5a78" opacity="0.55"/>
+      <circle cx="235" cy="330" r="7" fill="none" stroke="#EFE9DA" stroke-width="2.5" opacity="0.8"/>
+      <path d="M180,300 Q235,270 290,300" fill="none" stroke="#EFE9DA" stroke-width="1.5" opacity="0.5"/>
+
+      <!-- triple moon -->
+      <g opacity="0.75" transform="translate(430,190)">
+        <circle r="13" fill="none" stroke="#EFE9DA" stroke-width="1.6"/>
+        <path d="M40,-13 A13,13 0 1 0 40,13 A9,13 0 1 1 40,-13 Z" fill="#EFE9DA"/>
+        <circle cx="80" cy="0" r="13" fill="none" stroke="#EFE9DA" stroke-width="1.6"/>
+      </g>
+
+      <!-- circuit branch tree, upper right -->
+      <g stroke="#9DBE96" stroke-width="2.5" fill="none" opacity="0.8" transform="translate(980,-40)">
+        <path d="M60,260 C50,180 90,140 60,60"/>
+        <path d="M60,150 C90,120 120,120 150,80"/>
+        <path d="M60,150 C30,120 10,110 -20,70"/>
+        <path d="M60,60 C50,20 70,-10 55,-40"/>
+        <rect x="46" y="-52" width="18" height="18" rx="2"/>
+        <rect x="140" y="66" width="16" height="16" rx="2"/>
+        <rect x="-32" y="56" width="16" height="16" rx="2"/>
+        <circle cx="60" cy="150" r="4" fill="#9DBE96" stroke="none"/>
+      </g>
+
+      <!-- sun eye, right -->
+      <g transform="translate(1310,190)">
+        <ellipse rx="90" ry="70" fill="none" stroke="#D99B4E" stroke-width="3" opacity="0.85"/>
+        <ellipse rx="58" ry="46" fill="#e9e6da" opacity="0.9"/>
+        <circle r="17" fill="url(#sun)"/>
+        <g stroke="#D99B4E" stroke-width="2" opacity="0.7">
+          <line x1="-70" y1="0" x2="-95" y2="0"/>
+          <line x1="70" y1="0" x2="95" y2="0"/>
+          <line x1="0" y1="-55" x2="0" y2="-78"/>
+        </g>
+      </g>
+
+      <!-- rock / tablet with glowing trace, center -->
+      <g transform="translate(760,470)">
+        <path d="M-190,60 L-90,-80 L120,-100 L230,-10 L190,110 L-40,140 Z" fill="#2c2440" opacity="0.9"/>
+        <path d="M-140,20 C-60,-40 10,-45 40,10 C70,55 130,30 150,60" fill="none" stroke="#BFE9E4" stroke-width="3" opacity="0.85"/>
+        <circle cx="-140" cy="20" r="4" fill="#BFE9E4"/>
+        <circle cx="150" cy="60" r="4" fill="#BFE9E4"/>
+      </g>
+
+      <!-- heart with warm glow, lower left of center -->
+      <g transform="translate(560,760)">
+        <path d="M0,-8 C-40,-70 -110,-40 -100,10 C-92,60 -30,90 0,120 C30,90 92,60 100,10 C110,-40 40,-70 0,-8 Z"
+              fill="#7a3b3b" opacity="0.85"/>
+        <path d="M-120,10 C-90,-40 -60,-55 -30,-40 M120,10 C90,-40 60,-55 30,-40 M0,-70 C-10,-95 10,-95 0,-115"
+              fill="none" stroke="#E08A5B" stroke-width="2.5" opacity="0.55"/>
+      </g>
+
+      <!-- ribbon cable coil, lower right -->
+      <g transform="translate(1280,650)" opacity="0.85">
+        <path id="coil" d="M-140,120 C-60,180 40,60 120,110 C200,160 260,40 300,-20"
+              fill="none" stroke="#EFE9DA" stroke-width="3"/>
+        <g stroke="#c9b892" stroke-width="2">
+          <line x1="-120" y1="150" x2="-108" y2="132"/>
+          <line x1="-70" y1="168" x2="-60" y2="148"/>
+          <line x1="-10" y1="120" x2="0" y2="100"/>
+          <line x1="60" y1="95" x2="68" y2="74"/>
+          <line x1="130" y1="115" x2="140" y2="95"/>
+          <line x1="200" y1="130" x2="210" y2="110"/>
+          <line x1="260" y1="60" x2="270" y2="40"/>
+        </g>
+        <circle cx="-140" cy="120" r="8" fill="#EFE9DA"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-veil"></div>
+
+  <div class="wrap">
+    <div class="hero-role"><span id="roleWord">Web Developer</span></div>
+    <h1>Dhuha Ardha<br><em>Saputra</em></h1>
+    <p class="hero-sub">Karyawan swasta di Semarang yang menghabiskan siang hari menyusun sistem dengan Laravel &amp; Linux, dan waktu senggangnya berkeliling galeri, menggambar, serta merintis dunia pixel art di Godot.</p>
+    <div class="hero-meta">
+      <div>Berbasis di<strong>Semarang, Indonesia</strong></div>
+      <div>Sedang mengerjakan<strong>Sistem BATIC — Laravel</strong></div>
+      <div>Sedang belajar<strong>Godot &amp; Pixel Art</strong></div>
+    </div>
+  </div>
+
+  <div class="mode-toggle" id="modeToggle" role="button" tabindex="0" aria-label="Ganti mode tampilan">
+    <span id="modeLabelCanvas" class="active">Kanvas</span>
+    <div class="toggle-pill"><div class="knob"></div></div>
+    <span id="modeLabelKode">Kode</span>
+  </div>
+</section>
+
+<!-- TILE GRID -->
+<section class="tiles">
+  <div class="wrap">
+    <div class="tile-grid">
+      <a class="tile reveal" href="#pengalaman" data-cursor-text="Lihat">
+        <span class="num">01</span>
+        <h3>Karya Kode</h3>
+        <p>Sistem, fitur, dan perbaikan yang dikerjakan sehari-hari.</p>
+        <span class="go">Lihat riwayat <span class="arrow">→</span></span>
+      </a>
+      <a class="tile reveal" href="#galeri" data-cursor-text="Buka">
+        <span class="num">02</span>
+        <h3>Galeri</h3>
+        <p>Catatan kunjungan ke pameran &amp; galeri seni.</p>
+        <span class="go">Lihat foto <span class="arrow">→</span></span>
+      </a>
+      <a class="tile reveal" href="#tontonan" data-cursor-text="Lihat">
+        <span class="num">03</span>
+        <h3>Tontonan</h3>
+        <p>Anime dan game yang direkomendasikan.</p>
+        <span class="go">Lihat daftar <span class="arrow">→</span></span>
+      </a>
+      <a class="tile reveal" href="#tentang" data-cursor-text="Baca">
+        <span class="num">04</span>
+        <h3>Catatan</h3>
+        <p>Sedikit cerita di balik dua sisi yang berjalan bersamaan.</p>
+        <span class="go">Baca <span class="arrow">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="wrap reveal">
+    <h2>Dhuha membangun sistem yang rapi di siang hari, lalu <b>berhenti sejenak di depan lukisan</b> untuk mengingat kenapa hal-hal indah juga layak dikerjakan dengan teliti.</h2>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="tentang">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-visual reveal"></div>
+      <div class="about-copy reveal">
+        <span class="eyebrow">Pernyataan</span>
+        <h2>Dua ruang, satu orang yang sama</h2>
+        <p>Sebagian besar hari dihabiskan sebagai web developer fullstack, merawat sistem internal dari akses pengguna sampai laporan cetak. Sebagian lain dihabiskan berdiri diam di depan lukisan, atau menyusun piksel demi piksel di layar Godot.</p>
+        <p>Tidak ada yang lebih penting dari yang lain — keduanya sama-sama cara untuk membuat sesuatu terasa selesai dengan benar.</p>
+        <div class="about-cols">
+          <div>
+            <span class="col-label">Siang Hari</span>
+            <ul>
+              <li>Laravel, PHP &amp; MySQL</li>
+              <li>Administrasi server Linux</li>
+              <li>Dokumentasi &amp; korespondensi teknis</li>
+            </ul>
+          </div>
+          <div>
+            <span class="col-label">Malam &amp; Akhir Pekan</span>
+            <ul>
+              <li>Kunjungan galeri &amp; fotografi lukisan</li>
+              <li>Belajar menggambar dari dasar</li>
+              <li>Merintis game pixel art di Godot</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="galeri">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Ruang Pameran</span>
+      <h2>Catatan Kunjungan Galeri</h2>
+      <p>Bingkai di bawah ini menunggu fotomu sendiri. Tekan "Perbarui" untuk menambahkan foto, judul, lokasi, dan tahun kunjungan galerimu.</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- WATCHLIST -->
+<section class="watch" id="tontonan">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Katalog Kurasi</span>
+      <h2>Tontonan &amp; Permainan Rekomendasi</h2>
+      <p>Daftar yang tumbuh dari selera pribadi — dari drama emosional, dunia piksel yang tenang, sampai game yang menguji kesabaran.</p>
+    </div>
+    <div class="watch-grid">
+      <div class="watch-col reveal">
+        <span class="col-label">Anime</span>
+        <h3>Yang Wajib Ditonton</h3>
+        <div class="rec"><div class="title">My Hero Academia</div><div class="note">Tentang jadi pahlawan meski tak dianggap istimewa sejak awal.</div></div>
+        <div class="rec"><div class="title">Attack on Titan</div><div class="note">Dunia yang runtuh perlahan, satu kebenaran demi kebenaran.</div></div>
+        <div class="rec"><div class="title">Monster</div><div class="note">Thriller yang menahan napas tanpa perlu adegan berlebihan.</div></div>
+        <div class="rec"><div class="title">Berserk</div><div class="note">Kelam, brutal, dan tetap puitis di saat yang sama.</div></div>
+        <div class="rec"><div class="title">Sword Art Online</div><div class="note">Dunia virtual yang jadi taruhan nyawa.</div></div>
+        <div class="rec"><div class="title">Kimi no Na wa &amp; karya Miyazaki lainnya</div><div class="note">Untuk hari saat butuh sesuatu yang lembut dan menenangkan.</div></div>
+      </div>
+      <div class="watch-col reveal">
+        <span class="col-label">Dunia Piksel</span>
+        <h3>Game Pixel Art</h3>
+        <div class="rec"><div class="title">Bokura</div><div class="note">Kesederhanaan visual yang menyimpan cerita hangat.</div></div>
+        <div class="rec"><div class="title">Stardew Valley</div><div class="note">Ritme pelan untuk menenangkan kepala setelah hari yang padat.</div></div>
+        <div class="rec"><div class="title">Dead Cells</div><div class="note">Piksel yang bergerak cepat dan tak kenal ampun.</div></div>
+      </div>
+      <div class="watch-col reveal">
+        <span class="col-label">Uji Nyali</span>
+        <h3>Hardcore &amp; Naratif</h3>
+        <div class="rec"><div class="title">Elden Ring</div><div class="note">Dunia luas yang menghukum tiap langkah ceroboh.</div></div>
+        <div class="rec"><div class="title">Sons of the Forest</div><div class="note">Bertahan hidup dengan ketegangan yang tak pernah reda.</div></div>
+        <div class="rec"><div class="title">Cuphead</div><div class="note">Visual kartun lawas, tingkat kesulitan masa kini.</div></div>
+        <div class="rec"><div class="title">Devil May Cry</div><div class="note">Gaya bertarung yang terasa seperti koreografi.</div></div>
+        <div class="rec"><div class="title">Final Fantasy</div><div class="note">Epik lintas generasi yang selalu punya cerita baru.</div></div>
+        <div class="rec"><div class="title">Persona</div><div class="note">Kehidupan sekolah bertemu dunia bawah sadar.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="pengalaman">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Rekam Jejak</span>
+      <h2>Pengalaman Kerja</h2>
+      <p>Bagian ini bisa terus diperbarui — tambahkan, ubah, atau hapus pengalaman kapan pun tanpa perlu menyentuh kode.</p>
+    </div>
+    <div class="exp-toolbar">
+      <span style="font-size:0.75rem; color:var(--stone);">Tersimpan otomatis di perangkat ini</span>
+      <button class="btn" id="addExpBtn">+ Tambah Pengalaman</button>
+    </div>
+    <div class="timeline" id="expTimeline"></div>
+  </div>
+</section>
+
+<!-- DIALOG: experience form -->
+<dialog id="expDialog">
+  <div class="dlg-inner">
+    <h3 id="expDialogTitle">Tambah Pengalaman</h3>
+    <input type="hidden" id="expId">
+    <div class="field"><label>Posisi / Peran</label><input type="text" id="expRole" placeholder="cth. Web Developer / IT Staff"></div>
+    <div class="field"><label>Perusahaan</label><input type="text" id="expCompany" placeholder="cth. PT Ungaran Sari Garments"></div>
+    <div class="field"><label>Periode</label><input type="text" id="expPeriod" placeholder="cth. 2023 — Sekarang"></div>
+    <div class="field"><label>Deskripsi</label><textarea id="expDesc" placeholder="Ringkasan singkat pekerjaan/pencapaian"></textarea></div>
+    <div class="field"><label>Tag (pisahkan dengan koma)</label><input type="text" id="expTags" placeholder="cth. Laravel, MySQL, Linux"></div>
+    <div class="dlg-actions">
+      <button class="btn ghost" id="expCancel">Batal</button>
+      <button class="btn" id="expSave">Simpan</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- DIALOG: gallery form -->
+<dialog id="galDialog">
+  <div class="dlg-inner">
+    <h3>Perbarui Bingkai</h3>
+    <input type="hidden" id="galId">
+    <div class="field"><label>Tautan Foto (URL gambar)</label><input type="text" id="galUrl" placeholder="https://..."></div>
+    <div class="field"><label>Judul / Nama Karya</label><input type="text" id="galTitle" placeholder="cth. Potret Tanpa Judul"></div>
+    <div class="field"><label>Lokasi Galeri</label><input type="text" id="galLoc" placeholder="cth. Galeri Semarang"></div>
+    <div class="field"><label>Tahun Kunjungan</label><input type="text" id="galYear" placeholder="cth. 2026"></div>
+    <div class="dlg-actions">
+      <button class="btn ghost" id="galCancel">Batal</button>
+      <button class="btn" id="galSave">Simpan</button>
+    </div>
+  </div>
+</dialog>
+
+<footer id="kontak">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand reveal">
+        <span class="eyebrow">Kontak</span>
+        <h2>Mampir dan ngobrol soal kode atau lukisan.</h2>
+      </div>
+      <div class="foot-links reveal">
+        <a href="mailto:ardha@example.com">Email</a>
+        <a href="#" onclick="return false;">GitHub</a>
+        <a href="#" onclick="return false;">Instagram</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Semarang, Jawa Tengah, Indonesia</span>
+      <span>© 2026 Dhuha Ardha Saputra</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------------- NAV ---------------- */
+const header = document.getElementById('siteHeader');
+const heroEl = document.getElementById('beranda');
+function updateScrollState(){
+  const heroBottom = heroEl.getBoundingClientRect().bottom;
+  header.classList.toggle('scrolled', window.scrollY > 40);
+  document.body.classList.toggle('on-dark', heroBottom > 80);
+}
+window.addEventListener('scroll', updateScrollState);
+updateScrollState();
+
+/* ---------------- CANVAS / KODE MODE TOGGLE ---------------- */
+const modeToggle = document.getElementById('modeToggle');
+const modeCanvas = document.getElementById('modeLabelCanvas');
+const modeKode = document.getElementById('modeLabelKode');
+function setMode(kode){
+  heroEl.classList.toggle('mode-kode', kode);
+  modeCanvas.classList.toggle('active', !kode);
+  modeKode.classList.toggle('active', kode);
+}
+modeToggle.addEventListener('click', () => setMode(!heroEl.classList.contains('mode-kode')));
+modeToggle.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); setMode(!heroEl.classList.contains('mode-kode')); }
+});
+
+/* ---------------- CUSTOM CURSOR ---------------- */
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  document.body.classList.add('has-custom-cursor');
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  const label = document.getElementById('cursorLabel');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  window.addEventListener('mousemove', (e) => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+  });
+  function loop(){
+    rx += (mx - rx) * 0.16;
+    ry += (my - ry) * 0.16;
+    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loop);
+  }
+  loop();
+  const hoverables = document.querySelectorAll('a, button, .edit-pin, .tile, [role="button"]');
+  hoverables.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.classList.add('expand');
+      label.textContent = el.dataset.cursorText || '';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.classList.remove('expand');
+      label.textContent = '';
+    });
+  });
+}
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navSheet').classList.toggle('open');
+});
+document.querySelectorAll('.navsheet a').forEach(a => a.addEventListener('click', () => {
+  document.getElementById('navSheet').classList.remove('open');
+}));
+
+/* ---------------- ROLE WORD ROTATOR ---------------- */
+const roles = ['Web Developer', 'Pengamat Galeri', 'Pemburu Piksel', 'Penulis Puisi Pendek'];
+let roleIdx = 0;
+const roleEl = document.getElementById('roleWord');
+setInterval(() => {
+  roleEl.style.transform = 'translateY(-100%)';
+  roleEl.style.opacity = '0';
+  setTimeout(() => {
+    roleIdx = (roleIdx + 1) % roles.length;
+    roleEl.textContent = roles[roleIdx];
+    roleEl.style.transition = 'none';
+    roleEl.style.transform = 'translateY(100%)';
+    requestAnimationFrame(() => {
+      roleEl.style.transition = 'transform .5s ease, opacity .5s ease';
+      roleEl.style.transform = 'translateY(0)';
+      roleEl.style.opacity = '1';
+    });
+  }, 260);
+}, 3200);
+
+/* ---------------- SCROLL REVEAL ---------------- */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold:0.15 });
+revealEls.forEach(el => io.observe(el));
+
+/* ---------------- STORAGE HELPERS ---------------- */
+async function loadKey(key, fallback){
+  try{ const res = await window.storage.get(key); return res ? JSON.parse(res.value) : fallback; }
+  catch(e){ return fallback; }
+}
+async function saveKey(key, value){
+  try{ await window.storage.set(key, JSON.stringify(value)); }
+  catch(e){ console.error('Gagal menyimpan', key, e); }
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+/* ---------------- GALLERY ---------------- */
+const defaultGallery = [
+  {id:'g1', url:'', title:'Menunggu fotomu', loc:'Galeri —', year:'—', swatch:'swatch-1'},
+  {id:'g2', url:'', title:'Menunggu fotomu', loc:'Galeri —', year:'—', swatch:'swatch-2'},
+  {id:'g3', url:'', title:'Menunggu fotomu', loc:'Galeri —', year:'—', swatch:'swatch-3'},
+  {id:'g4', url:'', title:'Menunggu fotomu', loc:'Galeri —', year:'—', swatch:'swatch-4'},
+];
+let galleryData = [];
+const galleryGrid = document.getElementById('galleryGrid');
+const galDialog = document.getElementById('galDialog');
+
+function renderGallery(){
+  galleryGrid.innerHTML = '';
+  galleryData.forEach((item, idx) => {
+    const no = String(idx+1).padStart(3,'0');
+    const card = document.createElement('div');
+    card.className = 'art-frame reveal';
+    card.innerHTML = `
+      <div class="art-canvas ${item.url ? '' : item.swatch}">
+        ${item.url ? `<img src="${item.url}" alt="${item.title}">` : `<div class="art-blank">Belum ada foto<br>tekan "Perbarui"</div>`}
+      </div>
+      <div class="art-caption">
+        <div class="meta">
+          <span class="title">${item.title}</span>
+          <span class="loc">No. ${no} · ${item.loc} · ${item.year}</span>
+        </div>
+        <button class="edit-pin" data-id="${item.id}">Perbarui</button>
+      </div>
+    `;
+    galleryGrid.appendChild(card);
+    io.observe(card);
+  });
+  galleryGrid.querySelectorAll('.edit-pin').forEach(btn => {
+    btn.addEventListener('click', () => openGalDialog(btn.dataset.id));
+  });
+}
+function openGalDialog(id){
+  const item = galleryData.find(g => g.id === id);
+  document.getElementById('galId').value = id;
+  document.getElementById('galUrl').value = item.url || '';
+  document.getElementById('galTitle').value = item.title === 'Menunggu fotomu' ? '' : item.title;
+  document.getElementById('galLoc').value = item.loc === 'Galeri —' ? '' : item.loc;
+  document.getElementById('galYear').value = item.year === '—' ? '' : item.year;
+  galDialog.showModal();
+}
+document.getElementById('galCancel').addEventListener('click', () => galDialog.close());
+document.getElementById('galSave').addEventListener('click', async () => {
+  const id = document.getElementById('galId').value;
+  const item = galleryData.find(g => g.id === id);
+  item.url = document.getElementById('galUrl').value.trim();
+  item.title = document.getElementById('galTitle').value.trim() || 'Tanpa Judul';
+  item.loc = document.getElementById('galLoc').value.trim() || 'Galeri —';
+  item.year = document.getElementById('galYear').value.trim() || '—';
+  await saveKey('gallery-photos', galleryData);
+  renderGallery();
+  galDialog.close();
+});
+
+/* ---------------- EXPERIENCE ---------------- */
+const defaultExperience = [
+  {
+    id:'e1', role:'IT Staff — Web Developer', company:'PT Ungaran Sari Garments (Busana Group)',
+    period:'Berjalan — Sekarang',
+    desc:'Mengembangkan dan merawat BATIC, sistem internal untuk manajemen aset IT, tiket, dan serah terima perangkat. Fokus pada backend Laravel: kontrol akses berbasis entitas, notifikasi bergaransi per lokasi, hingga perbaikan cetak PDF lintas perangkat.',
+    tags:['Laravel','PHP','MySQL','Linux Server']
+  },
+  {
+    id:'e2', role:'Evaluasi Sistem ITSM', company:'Busana Group — Proyek Internal',
+    period:'Kontribusi berkelanjutan',
+    desc:'Menyusun dokumen perbandingan BATIC dengan Motadata ServiceOps sebagai bahan perencanaan anggaran, mencakup aspek ITSM dan ITAM.',
+    tags:['Dokumentasi','Analisis Sistem']
+  },
+  {
+    id:'e3', role:'Sistem Manajemen Perawatan &amp; Inventori', company:'Proyek Internal Sebelumnya',
+    period:'Riwayat',
+    desc:'Membangun sistem perawatan mesin dan modul inventori sparepart, termasuk perhitungan stok FIFO, pelacakan nomor seri, serta alur persetujuan transfer barang.',
+    tags:['PHP','MySQL','FIFO']
+  }
+];
+let expData = [];
+const expTimeline = document.getElementById('expTimeline');
+const expDialog = document.getElementById('expDialog');
+
+function renderExperience(){
+  expTimeline.innerHTML = '';
+  if(expData.length === 0){
+    expTimeline.innerHTML = '<p class="empty-note">Belum ada pengalaman ditambahkan. Tekan "+ Tambah Pengalaman" untuk memulai.</p>';
+    return;
+  }
+  expData.forEach((exp) => {
+    const card = document.createElement('div');
+    card.className = 'plaque-card reveal';
+    card.innerHTML = `
+      <div class="row-actions">
+        <button class="btn ghost" data-edit="${exp.id}">Ubah</button>
+        <button class="btn danger" data-del="${exp.id}">Hapus</button>
+      </div>
+      <span class="period">${exp.period}</span>
+      <div>
+        <h3>${exp.role}</h3>
+        <div class="role">${exp.company}</div>
+        <p class="desc">${exp.desc}</p>
+        <div class="tags">${(exp.tags||[]).map(t => `<span class="chip">${t}</span>`).join('')}</div>
+      </div>
+    `;
+    expTimeline.appendChild(card);
+    io.observe(card);
+  });
+  expTimeline.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', () => openExpDialog(btn.dataset.edit)));
+  expTimeline.querySelectorAll('[data-del]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if(confirm('Hapus pengalaman ini?')){
+        expData = expData.filter(e => e.id !== btn.dataset.del);
+        await saveKey('experience-entries', expData);
+        renderExperience();
+      }
+    });
+  });
+}
+function openExpDialog(id){
+  const isNew = !id;
+  document.getElementById('expDialogTitle').textContent = isNew ? 'Tambah Pengalaman' : 'Ubah Pengalaman';
+  if(isNew){
+    document.getElementById('expId').value = '';
+    document.getElementById('expRole').value = '';
+    document.getElementById('expCompany').value = '';
+    document.getElementById('expPeriod').value = '';
+    document.getElementById('expDesc').value = '';
+    document.getElementById('expTags').value = '';
+  } else {
+    const exp = expData.find(e => e.id === id);
+    document.getElementById('expId').value = exp.id;
+    document.getElementById('expRole').value = exp.role;
+    document.getElementById('expCompany').value = exp.company;
+    document.getElementById('expPeriod').value = exp.period;
+    document.getElementById('expDesc').value = exp.desc;
+    document.getElementById('expTags').value = (exp.tags||[]).join(', ');
+  }
+  expDialog.showModal();
+}
+document.getElementById('addExpBtn').addEventListener('click', () => openExpDialog(null));
+document.getElementById('expCancel').addEventListener('click', () => expDialog.close());
+document.getElementById('expSave').addEventListener('click', async () => {
+  const id = document.getElementById('expId').value || uid();
+  const entry = {
+    id,
+    role: document.getElementById('expRole').value.trim() || 'Tanpa Judul',
+    company: document.getElementById('expCompany').value.trim(),
+    period: document.getElementById('expPeriod').value.trim(),
+    desc: document.getElementById('expDesc').value.trim(),
+    tags: document.getElementById('expTags').value.split(',').map(t => t.trim()).filter(Boolean)
+  };
+  const existingIdx = expData.findIndex(e => e.id === id);
+  if(existingIdx >= 0){ expData[existingIdx] = entry; } else { expData.unshift(entry); }
+  await saveKey('experience-entries', expData);
+  renderExperience();
+  expDialog.close();
+});
+
+/* ---------------- INIT ---------------- */
+(async function init(){
+  galleryData = await loadKey('gallery-photos', defaultGallery);
+  renderGallery();
+  expData = await loadKey('experience-entries', defaultExperience);
+  renderExperience();
+})();
+</script>
+</body>
+</html>
